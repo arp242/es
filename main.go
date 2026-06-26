@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"maps"
 	"net/url"
-	"path/filepath"
-
-	"strconv"
-
 	"os"
+	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 
 	"zgo.at/acidtab"
@@ -19,7 +17,6 @@ import (
 	"zgo.at/zli"
 	"zgo.at/zstd/zbool"
 	"zgo.at/zstd/zjson"
-
 	"zgo.at/zstd/zmap"
 	"zgo.at/zstd/zslice"
 )
