@@ -13,6 +13,7 @@ Commands:
 
     es                            List all indexes.
     es «index» [select/list/ls]   Select/list rows for this index.
+    es «index» delete             Delete rows by query.
     es «index» describe           Show index parameters.
     es «index» drop               Delete index.
 
@@ -53,4 +54,9 @@ Flags for select:
 
                      For full documentation, see:
                      https://www.elastic.co/guide/en/elasticsearch/reference/8.19/query-dsl-query-string-query.html#query-string-syntax
+
+Flags for delete:
+
+    -w, -where       Query string to search; the syntax is identical to the
+                     select command. This flag is mandatory.
 `[1:]

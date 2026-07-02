@@ -46,7 +46,7 @@ func main() {
 		f.Args, index = append([]string{index}, f.Args...), ""
 	}
 	// Accept both "index-name cmd" and "cmd index-name"
-	commands := []string{"ls", "list", "select", "describe", "drop"}
+	commands := []string{"ls", "list", "describe", "drop", "select", "delete"}
 	if slices.Contains(commands, index) {
 		cmd, index = index, cmd
 	}
@@ -72,6 +72,12 @@ func main() {
 		)
 		zli.F(f.Parse())
 		listIndex(index, selekt.String(), where.String(), order.String(), limit.Int())
+	case "delete":
+		var (
+			where = f.String("", "w", "where")
+		)
+		zli.F(f.Parse())
+		deleteRows(index, where.String())
 
 	case "describe":
 		zli.F(f.Parse())
@@ -175,6 +181,28 @@ func listIndex(index, selekt, where, order string, limit int) {
 	// get("/"+index+"/_search?"+params.Encode(), &s)
 	post("/"+index+"/_search?"+params.Encode(), body, &s)
 	printRows(s.Hits.Hits, index, selekt)
+}
+
+// DELETE /<index>/_doc/<_id>
+// POST /my-index-000001/_delete_by_query
+func deleteRows(index, where string) {
+	if strings.TrimSpace(where) == "" {
+		zli.Fatalf("-where is empty or not given")
+	}
+
+	var s struct {
+		ElasticError
+		Deleted int `json:"deleted"`
+	}
+
+	body := zjson.MustMarshal(map[string]any{
+		"query": map[string]any{
+			"query_string": map[string]any{"query": where},
+		},
+	})
+
+	post("/"+index+"/_delete_by_query", body, &s)
+	fmt.Printf("(deleted %d)\n", s.Deleted)
 }
 
 func printRows(hits []Hit, index string, selekt string) {

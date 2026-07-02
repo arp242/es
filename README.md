@@ -9,6 +9,7 @@ Usage:
 
     es                            List all indexes.
     es «index» [select/list/ls]   Select/list rows for this index.
+    es «index» delete             Delete rows by query.
     es «index» describe           Show index parameters.
     es «index» drop               Delete index.
 
