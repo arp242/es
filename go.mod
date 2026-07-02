@@ -1,4 +1,4 @@
-module es
+module zgo.at/es
 
 go 1.26.0
 
