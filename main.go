@@ -273,7 +273,7 @@ func printRows(hits []Hit, index string, selekt string) {
 	if expanded {
 		var (
 			headersType = headerTypes(index, expanded)
-			l           = zslice.Longest(headers) + zslice.Longest(zmap.Values(headersType))
+			l           = zslice.Longest(headers) + zslice.Longest(slices.Collect(maps.Values(headersType)))
 			headers2    = make([]string, len(headers))
 		)
 		for i := range headers {

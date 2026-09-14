@@ -1,12 +1,12 @@
 module zgo.at/es
 
-go 1.26.0
+go 1.27.0
 
 require (
 	zgo.at/acidtab v1.1.0
-	zgo.at/jfmt v0.0.0-20260130232205-d030781d0fbb
-	zgo.at/zli v0.0.0-20251226224229-7bb9a5cf3265
-	zgo.at/zstd v0.0.0-20260523222643-8c0814883fdf
+	zgo.at/jfmt v0.0.0-20260825153922-373911f68bf8
+	zgo.at/zli v0.0.0-20260831213520-2d12e8b7b832
+	zgo.at/zstd v0.0.0-20260831142534-3f5c237602ba
 )
 
 require (
