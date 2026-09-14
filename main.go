@@ -11,6 +11,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"sync"
 
 	"zgo.at/acidtab"
 	"zgo.at/jfmt"
@@ -135,14 +136,34 @@ func listIndexes() {
 		Rep          string `json:"rep"`            // "0",
 		StoreSize    string `json:"store.size"`     // "1.1kb",
 	}
-	get("/_cat/indices?s=index", &list)
+	var aliases []struct {
+		Alias         string `json:"alias"`          // "bits-v1"
+		Index         string `json:"index"`          // "development-bits-v1"
+		Filter        string `json:"filter"`         // "-"
+		IsWriteIndex  string `json:"is_write_index"` // "-"
+		RoutingIndex  string `json:"routing.index"`  // "-"
+		RoutingSearch string `json:"routing.search"` // "-"
+	}
 
-	t := acidtab.New("Name", "Status", "Health", "# docs", "# shard").
-		AlignCol(4, acidtab.Right).AlignCol(5, acidtab.Right)
+	var wg sync.WaitGroup
+	wg.Go(func() { get("/_cat/indices?s=index", &list) })
+	wg.Go(func() { get("/_cat/aliases?s=index", &aliases) })
+	wg.Wait()
+
+	t := acidtab.New("Name", "Status", "Health", "# docs", "Pri. Store", "Total store", "# shard").
+		AlignCol(4, acidtab.Right).AlignCol(5, acidtab.Right).AlignCol(6, acidtab.Right).AlignCol(7, acidtab.Right)
 	for _, l := range list {
-		t = t.Rows(l.Index, l.Status, l.Health, l.DocsCount, l.Pri)
+		t = t.Rows(l.Index, l.Status, l.Health, l.DocsCount, l.PriStoreSize, l.StoreSize, l.Pri)
 	}
 	printTable(t)
+
+	if len(aliases) > 0 {
+		t := acidtab.New("Alias", "Dest", "Filter", "Routing index", "Routing search", "Is write")
+		for _, a := range aliases {
+			t = t.Rows(a.Alias, a.Index, a.Filter, a.RoutingIndex, a.RoutingSearch, a.IsWriteIndex)
+		}
+		printTable(t)
+	}
 }
 
 type Hit struct {
