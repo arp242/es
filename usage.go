@@ -29,6 +29,8 @@ Flags for drop:
 
 Flags for select:
 
+    -j, -json        Print as JSON, one object per line ("JSONL").
+
     -s, -select      Columns to select; as comma-separated list. "*" selects all
                      rows with at least one non-zero value in the result set,
                      "*.all" selects all rows. Default: "*".

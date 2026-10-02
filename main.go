@@ -66,13 +66,14 @@ func main() {
 	switch cmd {
 	case "ls", "list", "select":
 		var (
+			asJSON = f.Bool(false, "j", "json")
 			selekt = f.String("*", "s", "select")
 			where  = f.String("", "w", "where")
 			order  = f.String("", "o", "order")
 			limit  = f.Int(100, "l", "limit")
 		)
 		zli.F(f.Parse())
-		listIndex(index, selekt.String(), where.String(), order.String(), limit.Int())
+		listIndex(asJSON.Bool(), index, selekt.String(), where.String(), order.String(), limit.Int())
 	case "delete":
 		var (
 			where = f.String("", "w", "where")
@@ -175,7 +176,7 @@ type Hit struct {
 }
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-index.html
-func listIndex(index, selekt, where, order string, limit int) {
+func listIndex(asJSON bool, index, selekt, where, order string, limit int) {
 	var s struct {
 		ElasticError
 		Hits struct {
@@ -201,7 +202,15 @@ func listIndex(index, selekt, where, order string, limit int) {
 
 	// get("/"+index+"/_search?"+params.Encode(), &s)
 	post("/"+index+"/_search?"+params.Encode(), body, &s)
-	printRows(s.Hits.Hits, index, selekt)
+	if asJSON {
+		for _, h := range s.Hits.Hits {
+			j, err := json.Marshal(h)
+			zli.F(err)
+			fmt.Println(string(j))
+		}
+	} else {
+		printRows(s.Hits.Hits, index, selekt)
+	}
 }
 
 // DELETE /<index>/_doc/<_id>
