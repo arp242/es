@@ -10,5 +10,5 @@ zgo.at/termtext v1.5.0 h1:4p9GVUDYUR8oWvpxOZsO5ZrNSkA99bp8gXNKxKj+Kl0=
 zgo.at/termtext v1.5.0/go.mod h1:AcdAAiydkqSFadljJaEj9jv7bpyJxfQqGtPWyZCLenQ=
 zgo.at/zli v0.0.0-20260831213520-2d12e8b7b832 h1:Md4/eV1CGR/JgTJo2iglobW6p4OxsD5UOo52+G5m1zg=
 zgo.at/zli v0.0.0-20260831213520-2d12e8b7b832/go.mod h1:gBNTYp7fI6FDmJLtaAg87Rhw5vpD3hQIr9LubY/2R2I=
-zgo.at/zstd v0.0.0-20260831142534-3f5c237602ba h1:3mhL6wNf+pfBd4eopVUavsYFItnISdcRAmi+l5ThbvQ=
-zgo.at/zstd v0.0.0-20260831142534-3f5c237602ba/go.mod h1:uly4ZYPz8zHIf1TteWbU34OxxV0CYunOaxVuhChtciQ=
+zgo.at/zstd v0.0.0-20260922142212-b67327a0abc8 h1:qS/+FAJTinSHNiiW79bDlr3pKvVR5+rHKL5+8SKIKrs=
+zgo.at/zstd v0.0.0-20260922142212-b67327a0abc8/go.mod h1:uly4ZYPz8zHIf1TteWbU34OxxV0CYunOaxVuhChtciQ=

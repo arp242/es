@@ -2,7 +2,8 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
 	"maps"
 	"net/url"
@@ -83,7 +84,7 @@ func main() {
 
 	case "describe":
 		zli.F(f.Parse())
-		var j json.RawMessage
+		var j jsontext.Value
 		r := get("/"+index, &j)
 
 		jfmt.NewFormatter(120, "", "  ").Format(os.Stdout, bytes.NewReader(r))
